@@ -2,10 +2,12 @@ import { transactionsView } from './transactions.js';
 
 export const { render, bind } = transactionsView({
   kind: 'income',
-  title: 'Receitas',
-  sub: 'Registre as entradas de dinheiro da casa no mês.',
+  title: 'Controle de Receitas',
+  sub: 'Salários, rendas extras e valores a receber da família.',
   newLabel: 'Nova Receita',
-  totalLabel: 'Total de Receitas',
-  tile: 'bolt',
+  labels: {
+    total: 'Total de Receitas', done: 'Já recebido', doneFoot: 'entradas recebidas', pending: 'A receber', pendingFoot: 'entradas previstas',
+  },
+  tile: 'trend',
   tileTone: 'green',
 });
