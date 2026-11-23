@@ -1,4 +1,4 @@
-import { api, session } from './api.js';
+import { api, session, storageIsPersistent } from './api.js';
 import { budgetStatus, esc, icon, money, openModal, thisMonth, toast, fmtDay } from './ui.js';
 import { openTransactionModal } from './txform.js';
 import * as overview from './views/overview.js';
@@ -159,6 +159,7 @@ async function start() {
   $('app').hidden = false;
   await loadProfile();
   render();
+  if (!storageIsPersistent) toast('Armazenamento local indisponível: os dados serão perdidos ao fechar a aba.', 'err');
 }
 
 (async () => {

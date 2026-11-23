@@ -17,7 +17,7 @@ export async function render() {
         </form>
       </div>
       <div class="card">
-        <div class="card-head"><div class="card-title">Bloqueio de Segurança</div>
+        <div class="card-head"><div class="card-title">Bloqueio de Tela</div>
           <span class="badge ${hasPin ? 'green' : 'amber'}">${hasPin ? 'PIN ativo' : 'Sem PIN'}</span></div>
         <div class="setting-row">
           <small>${hasPin ? 'O app pede o PIN ao abrir e quando você clica no cadeado.' : 'Proteja seus dados financeiros com um PIN de 4 a 8 dígitos.'}</small>
@@ -45,6 +45,17 @@ export async function render() {
           <button class="btn danger" data-restore>${icon('upload')}Restaurar backup</button>
           <input type="file" id="restore-file" accept="application/json,.json" hidden>
         </div>
+      </div>
+      <div class="setting-row">
+        <div><strong>Começar do zero</strong><small>Apaga todos os lançamentos e metas, inclusive os dados de exemplo. Categorias, perfil e PIN são mantidos.</small></div>
+        <div class="row-btns"><button class="btn danger" data-clear>Apagar lançamentos e metas</button></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:var(--gap)">
+      <div class="callout">
+        <span class="icon-tile tone-indigo">${icon('lock')}</span>
+        <div><strong>Seus dados ficam só neste navegador</strong>
+          <p>O FinHub não envia nada para servidores: tudo é guardado no armazenamento local deste aparelho. Limpar os dados do navegador apaga as finanças, então baixe um backup com frequência. O PIN é um bloqueio de tela e não criptografa os dados.</p></div>
       </div>
     </div>`;
 }
@@ -106,6 +117,13 @@ export function bind(root, state, refresh) {
       document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url);
       toast('Backup gerado');
     } catch (e) { toast(e.message, 'err'); }
+  };
+
+  root.querySelector('[data-clear]').onclick = async () => {
+    if (await confirmBox('Apagar todos os lançamentos e metas? Essa ação não pode ser desfeita (baixe um backup antes).', { confirmLabel: 'Apagar tudo' })) {
+      await api.clearData();
+      toast('Dados apagados');
+    }
   };
 
   const fileInput = root.querySelector('#restore-file');
