@@ -1,11 +1,11 @@
 {
   "name": "finhub",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22.5" },
+  "engines": { "node": ">=20" },
   "scripts": {
-    "start": "node --no-warnings server/index.js",
-    "test": "node --no-warnings --test test/*.test.js"
+    "start": "node server/index.js",
+    "test": "node --test test/*.test.js"
   }
 }
